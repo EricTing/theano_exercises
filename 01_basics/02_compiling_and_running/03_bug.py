@@ -11,3 +11,5 @@ z = T.zeros_like(y)
 a = x + z
 f = function([x, y], a)
 output = f(np.zeros((1,), dtype=x.dtype), np.zeros((2,), dtype=y.dtype))
+
+# THEANO_FLAGS='mode=FAST_COMPILE' python 03_bug.py

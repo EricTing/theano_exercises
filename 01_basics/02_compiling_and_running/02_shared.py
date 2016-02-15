@@ -2,7 +2,10 @@
 # python 01_function.py to see if your solution works!
 #
 import numpy as np
-raise NotImplementedError("TODO: add any other imports you need")
+from theano.compat.python2x import OrderedDict
+import theano
+from theano import function
+
 
 def make_shared(shape):
     """
@@ -10,7 +13,10 @@ def make_shared(shape):
     shape.
     You can use any value you want.
     """
-    raise NotImplementedError("TODO: implement the function")
+    values = np.random.rand(*shape)
+    x = theano.shared(value=values)
+    return x
+
 
 def exchange_shared(a, b):
     """
@@ -18,7 +24,11 @@ def exchange_shared(a, b):
     b: a theano shared variable
     Uses get_value and set_value to swap the values stored in a and b
     """
-    raise NotImplementedError("TODO: implement the function")
+    a_value = a.get_value()
+    b_value = b.get_value()
+    a.set_value(b_value)
+    b.set_value(a_value)
+
 
 def make_exchange_func(a, b):
     """
@@ -29,8 +39,11 @@ def make_exchange_func(a, b):
     values in a and b
     f should not return anything
     """
-    raise NotImplementedError("TODO: implement the function")
-
+    updates = OrderedDict()
+    updates[a] = b
+    updates[b] = a
+    f = function([], updates)
+    return f
 
 
 if __name__ == "__main__":
